@@ -1,0 +1,45 @@
+name: ETL CotAI
+on:
+  schedule:
+    - cron: '0 9 * * *'  # Executa todo dia às 9:00 UTC
+  workflow_dispatch:  
+  
+jobs:
+  run-scripts:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install requirements
+      run: pip3 install -r requirements.txt
+      
+    - name: Run extract_raw.py
+      env:
+        KEY_GOIANA: ${{ secrets.API_KEY }}
+      run: python cotai/extract/extract_raw.py
+
+    - name: Run transform_silver.py
+      run: python cotai/transform/transform_silver.py
+
+    - name: Run transform_gold.py
+      run: python cotai/load/transform_gold.py
+        
+    - name: Commit and push changes
+      run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "github-actions"
+
+        git add -A
+          git diff --quiet && git diff --staged --quiet || git commit -am "new dataload"
+          
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
