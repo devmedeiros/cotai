@@ -23,7 +23,7 @@ jobs:
       
     - name: Run ETL Pipeline
       env:
-        KEY_GOIANA: ${{ secrets.API_KEY }}
+        API_KEY: ${{ secrets.API_KEY }}
       run: python cotai/pipeline.py
 
     - name: Commit and push changes
