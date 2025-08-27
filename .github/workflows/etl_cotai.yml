@@ -21,9 +21,10 @@ jobs:
     - name: Install requirements
       run: pip3 install -r requirements.txt
       
-    - name: Run ETL Pipeline
+    - name: Run ETL Pipeline + LLM
       env:
         API_KEY: ${{ secrets.API_KEY }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       run: python cotai/pipeline.py
 
     - name: Commit and push changes
