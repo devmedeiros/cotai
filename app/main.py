@@ -10,7 +10,7 @@ st.set_page_config(
 )
 
 @st.cache_data
-def load_data():
+def load_data(ttl='3h'):
     return pd.read_parquet('data/gold/gold.parquet')
 
 def carregar_insight_do_dia(data_referencia):
