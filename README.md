@@ -1,6 +1,6 @@
 # cotai
 
-Projeto Final da disciplina **Python Programming for Data Engineers**.
+Projeto Final da disciplina **Python Programming for Data Engineers**. O relatório em streamlit está disponível aqui https://appcotai.streamlit.app .
 
 Os requisitos do projeto foram propostos pelo professor **Eduardo Miranda**.
 
@@ -9,7 +9,67 @@ Os requisitos do projeto foram propostos pelo professor **Eduardo Miranda**.
  2. Processar, validar e armazenar os dados em diferentes camadas (raw, silver, gold).
  3. Integra uma LLM (ex.: ChatGPT) para gerar resumos e insights em linguagem natural, voltados a usuários de negócio.
 
-## Fluxo do Projeto
+## Setup e Configuração
+
+### Pré-requisitos
+ - Python 3.10.12
+
+### Instalação
+ 1. Clone o repositório
+
+```bash
+git clone https://github.com/devmedeiros/cotai.git
+```
+
+ 2. Instale as dependências
+
+```bash
+pip install -r requirements.txt
+```
+
+### Configuração das APIs
+
+**1. Exchange Rate API**
+ 1. Acesse https://www.exchangerate-api.com/
+ 2. Faça o cadastro gratuito
+ 3. Copie sua API key do dashboard
+<img width="858" height="261" alt="Captura de tela de 2025-08-28 20-18-14" src="https://github.com/user-attachments/assets/c25f7859-51b8-4a55-8fa0-f4142f3194b3" />
+
+
+
+**2. Google Gemini API**
+ 1. Acesse https://ai.google.dev/
+ 2. Crie uma conta Google se necessário
+ 3. Gere uma API key no Google AI Studio
+ 4. Copie sua API key
+
+**3. Arquivo .env**
+Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+```bash
+API_KEY="CHAVE_DE_API"
+GEMINI_API_KEY="API_DO_GEMINI"
+```
+Na qual `API_KEY` é sua chave do Exchange Rate API e a `GEMINI_API_KEY` é a sua chave do Gemini.
+
+### Execução
+
+**Pipeline ETL**
+
+Execute o processo completo de ETL com análise do Gemini: 
+
+```bash
+python cotai/pipeline.py
+```
+
+**Dashboard Streamlit**
+
+Para visualizar o relatório interativo:
+
+```bash
+streamlit run app/main.py
+```
+
+## Fluxo do Projeto (conforme as instruções do professor)
 
 ### 1. Ingestão (Ingest)
  - Coletar dados da API https://www.exchangerate-api.com/.
